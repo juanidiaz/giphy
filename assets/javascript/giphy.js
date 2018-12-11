@@ -34,7 +34,7 @@ var searchLimit = 10; // How many images to return
 //         searchString = "ryan+gosling";
 
 //         //javascript, jQuery
-//         var xhr = $.get("http://api.giphy.com/v1/gifs/search?q=" + searchString + "&api_key=" + myKey + "&limit=" + searchLimit);
+//         var xhr = $.get("https://api.giphy.com/v1/gifs/search?q=" + searchString + "&api_key=" + myKey + "&limit=" + searchLimit);
 
 //         xhr.done(function (data) {
 //             console.log("success got data", data);
@@ -94,7 +94,7 @@ $(document).ready(function() {
   
       // api from https://github.com/Giphy/GiphyAPI#search-endpoint 
   
-      httpGetAsync('http://api.giphy.com/v1/gifs/search?' + params, function(data) {
+      httpGetAsync('https://api.giphy.com/v1/gifs/search?' + params, function(data) {
         var gifs = JSON.parse(data);
         var firstgif = gifs.data[0].images.fixed_width.url;
         $("#image").html("<img src='" + firstgif + "'>");
