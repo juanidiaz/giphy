@@ -23,33 +23,26 @@
 
 <body>
 
-    <form>
-        <div class="form-row align-items-center">
-            <div class="col-auto">
-                <label class="sr-only" for="inlineFormInput">Name</label>
-                <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="String to search">
-            </div>
-            <div class="col-auto">
-                <button type="submit" id="submit" class="btn btn-primary mb-2">Search GIF's</button>
-            </div>
-        </div>
-    </form>
+    <div id="buttons">
 
-    <br>
-    <br>
+    </div>
+
 
     <div id="gifs">
 
     </div>
 
+    <div id="addCityButton">
+        <input type="text" id="newCityName" placeholder="Add a city">
+        <button type="submit" id="addCity" class="btn btn-secondary mb-2">Add city</button>
+    </div>
+
     <div id="query">
-        <input type="text" id="inputQuery"><input type="button" id="submitButton" value="submit">
-    </div>
-
-    <div id="image">
-    </div>
-
-    <!-- Project script -->
+            <input type="text" id="inlineFormInput" placeholder="Manual search">
+            <button type="submit" id="submit" class="btn btn-secondary mb-2">Search GIF's</button>
+        </div>
+    
+        <!-- Project script -->
     <script src="./assets/javascript/giphy.js"></script>
 
 </body>

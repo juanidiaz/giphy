@@ -5,11 +5,10 @@
 
 
 //      ARRAYS
-
+var topics = ["paris", "madrid", "new york", "toronto", "tokyo"];
 
 
 //      STRINGS/CHAR
-var searchString = "" // What to look for
 var myKey = "lKEjHvIVGBtk7Z1Ai1vo4y0bqkX3CHJp"; // Key provided by GIPHY
 
 
@@ -23,89 +22,144 @@ var searchLimit = 10; // How many images to return
 
 // ------------------------------------------------------------
 
-// $(document).ready(function () {
+$(document).ready(function () {
 
-//     console.log("Yup... its loaded!");
+  // Encode the untrusted values to avoid security breaches
+  function escapeUntrustedData(data) {
+    var ret = [];
 
+    // Builld the query parameters
+    for (var d in data)
+      ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
 
-//     $("#submit").on("click", function () {
+    // Log the sting (key & query)  
+    //console.log("Encoded string: " + ret.join("&"));
 
-//         console.log("CLICKED");
-//         searchString = "ryan+gosling";
+    // Return an array (already scaped) with key and query
+    return ret.join("&");
+  }
 
-//         //javascript, jQuery
-//         var xhr = $.get("https://api.giphy.com/v1/gifs/search?q=" + searchString + "&api_key=" + myKey + "&limit=" + searchLimit);
+  function updateScreen() {
+    // Log the topics array
+    //console.log(topics);
 
-//         xhr.done(function (data) {
-//             console.log("success got data", data);
+    // Clear all buttons
+    $("#buttons").html("");
 
-//             for (var i = 0; i < searchLimit; i++) {
+    // Build all buttons again
+    for (var c in topics)
+      $("#buttons").append("<button class=\"btn btn-primary mb-2 ml-3 searchMe\">" + topics[c] + "</button>");
 
-//                 console.log("URL: " + data.data[i].images.fixed_height.url + "Rating: " + data.data[i].rating);
-//                 $("#gifs").append("<img src = " + data.data[i].images.fixed_height.url + " alt = \"Powered By GIPHY\" id = \"gif" + i + "\"><br>");
+  }
 
-//             }
-
-//         });
-
-
-//     })
-
-// });
-
-
-$(document).ready(function() {
-  
-    /* 
-    * The following two functions are used for making the API call using
-    * pure Javascript. I wouldn't worry about the details
-    */
-  
-    function encodeQueryData(data)
-    {
-       var ret = [];
-       for (var d in data)
-          ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
-       return ret.join("&");
+  function getResponse(theUrl, callback) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+        callback(xmlHttp.responseText);
     }
-  
-    function httpGetAsync(theUrl, callback)
-    {
-        var xmlHttp = new XMLHttpRequest();
-        xmlHttp.onreadystatechange = function() { 
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                callback(xmlHttp.responseText);
-        }
-        xmlHttp.open("GET", theUrl, true); // true for asynchronous 
-        xmlHttp.send(null);
-    }
-  
-    /*
-    * The following functions are what do the work for retrieving and displaying gifs
-    * that we search for.
-    */
-  
-    function getGif(query)
-    {
-      console.log(query);
-      query = query.replace(' ', '+');
-      var params = { 'api_key': myKey, 'q': query};
-      params = encodeQueryData(params);
-  
-      // api from https://github.com/Giphy/GiphyAPI#search-endpoint 
-  
-      httpGetAsync('https://api.giphy.com/v1/gifs/search?' + params, function(data) {
-        var gifs = JSON.parse(data);
-        var firstgif = gifs.data[0].images.fixed_width.url;
-        $("#image").html("<img src='" + firstgif + "'>");
-        console.log(gifs.data);
-      });
-    }
-  
-    $("#submitButton").on("click", function()
-    {
-      var query = $("#inputQuery").val();
-      getGif(query);
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.send(null);
+  }
+
+  function getGif(query) {
+    // Text to look
+    console.log("Looking for: " + query);
+
+    // Replace spaces for `+`
+    query = query.replace(" ", "+");
+
+    // create a `params` variable with key, query and limit of hits string values
+    var params = {
+      "api_key": myKey,
+      "q": query,
+      "limit": searchLimit
+    };
+
+    // encode the request to look like api_key=YOUR_API_KEY&q=YOUR_QUERY
+    params = escapeUntrustedData(params);
+
+    // Ask GIPHY and use the response
+    //    Sample request "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=YOUR_API_KEY&limit=5");
+
+    getResponse("https://api.giphy.com/v1/gifs/search?" + params, function (data) {
+
+      // Get only the GIFS of the data
+      var gifs = JSON.parse(data);
+
+      // Log the array with all the GIF info
+      console.log(gifs.data);
+
+      // For each GIF append an element to the DOM
+      for (var g in gifs.data) {
+
+        // Select the `fixed_width` address only
+        // var gifX = gifs.data[g].images.fixed_height.url;
+        var gifX = gifs.data[g].images.fixed_height_still.url;
+
+        // 'divGif' Will contain all the elements for the new GIF
+        var divGif = $("<div id=\"anchor\"></div>");
+
+        divGif.append("Rating: " + gifs.data[g].rating + "<br>");
+        divGif.append("<img src=\"" + gifX + "\" class=\"staticgif\">");
+
+        // Add the image in the page
+        $("#gifs").append(divGif);
+      }
     });
+  }
 
+  // Add city button
+  $("#addCity").on("click", function () {
+
+    // Get city name from form
+    var newCity = $("#newCityName").val();
+
+    if (newCity != "") {
+      // Add a new topic to the `topics` array
+      topics.push(newCity);
+
+      updateScreen();
+    } else {
+      alert("City value cannot be empty!")
+    }
+
+  });
+
+  // Search for a GIF using the search box
+  $("#submit").on("click", function () {
+    // Clear the existing elements, if any
+    $("#gifs").html("");
+
+    // Get the search string form the form
+    var query = $("#inlineFormInput").val();
+
+    // Go get the gif using the search string
+    getGif(query);
+  });
+
+  // Click a button to look for images
+  $("#buttons").on("click", ".btn", function () {
+    // Clear the existing elements, if any
+    $("#gifs").html("");
+
+    console.log(this.innerHTML);
+
+    // Get the search string form the form
+    var query = this.innerHTML;
+
+    // Go get the gif using the search string
+    getGif(query);
+  });
+
+  // Hover over GIF
+  $(".staticgif").on("click", "#gifs", function () {
+
+    console.log("I'M CLICKING ON A GIF");
+
+  });
+
+
+  // Build th screen on load
+  updateScreen()
 });
