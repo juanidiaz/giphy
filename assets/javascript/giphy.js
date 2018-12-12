@@ -1,7 +1,7 @@
 // VARIABLES --------------------------------------------
 
 //      OBJECTS
-
+var response = "";
 
 
 //      ARRAYS
@@ -86,6 +86,7 @@ $(document).ready(function () {
 
       // Get only the GIFS of the data
       var gifs = JSON.parse(data);
+      response = gifs;
 
       // Log the array with all the GIF info
       console.log(gifs.data);
@@ -98,10 +99,10 @@ $(document).ready(function () {
         var gifX = gifs.data[g].images.fixed_height_still.url;
 
         // 'divGif' Will contain all the elements for the new GIF
-        var divGif = $("<div id=\"anchor\"></div>");
+        var divGif = $("<div></div>");
 
         divGif.append("Rating: " + gifs.data[g].rating + "<br>");
-        divGif.append("<img src=\"" + gifX + "\" class=\"staticgif\">");
+        divGif.append("<img src=\"" + gifX + "\" class=\"staticgif\" width=\"200px\" id=\"" + g + "\">");
 
         // Add the image in the page
         $("#gifs").append(divGif);
@@ -152,10 +153,15 @@ $(document).ready(function () {
     getGif(query);
   });
 
-  // Hover over GIF
-  $(".staticgif").on("click", "#gifs", function () {
+  $("#gifs").on("mouseover", ".staticgif", function () {
 
-    console.log("I'M CLICKING ON A GIF");
+    $("#" + this.id).attr("src", response.data[this.id].images.fixed_height.url);
+
+  });
+
+  $("#gifs").on("mouseleave", ".staticgif", function () {
+
+    $("#" + this.id).attr("src", response.data[this.id].images.fixed_height_still.url);
 
   });
 
