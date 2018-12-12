@@ -1,15 +1,15 @@
 // VARIABLES --------------------------------------------
 
 //      OBJECTS
-var response = "";
+var response = ''; // Array returned by GIHPY
 
 
 //      ARRAYS
-var topics = ["Mickey Mouse", "Pluto", "Chip", "Winnie Pooh", "Cinderella"];
+var topics = ['Mickey Mouse', 'Pluto', 'Chip', 'Winnie Pooh', 'Cinderella', 'Rapunzel', 'Simba', 'Jiminy Cricket'];
 
 
 //      STRINGS/CHAR
-var myKey = "lKEjHvIVGBtk7Z1Ai1vo4y0bqkX3CHJp"; // Key provided by GIPHY
+var myKey = 'lKEjHvIVGBtk7Z1Ai1vo4y0bqkX3CHJp'; // Key provided by GIPHY
 
 
 //      NUMBER/INTEGER
@@ -62,6 +62,18 @@ $(document).ready(function () {
     xmlHttp.send(null);
   }
 
+  // Return an new card 
+  function newGif(item) {
+    
+    var cardDiv = $("<div>").addClass("card m-2");
+    var cardImg = $("<img>").attr("src", response.data[item].images.fixed_height_still.url).addClass("staticgif card-img-top").attr('id', item).appendTo(cardDiv);
+    var cardBody = $("<div>").addClass("card-body").appendTo(cardDiv);
+    var cardText = $("<p>").addClass("card-text").text("Rating: " + response.data[item].rating.toUpperCase()).appendTo(cardBody)
+
+    // Return the element
+    return cardDiv;
+  }
+
   function getGif(query) {
     // Text to look
     console.log("Looking for: " + query);
@@ -94,62 +106,39 @@ $(document).ready(function () {
       // For each GIF append an element to the DOM
       for (var g in gifs.data) {
 
-        // Select the `fixed_width` address only
-        // var gifX = gifs.data[g].images.fixed_height.url;
-        var gifX = gifs.data[g].images.fixed_height_still.url;
+        $("#gifs").append(newGif(g));
 
-        // 'divGif' Will contain all the elements for the new GIF
-        var divGif = $("<div></div>");
-
-        divGif.append("Rating: " + gifs.data[g].rating + "<br>");
-        divGif.append("<img src=\"" + gifX + "\" class=\"staticgif\" width=\"200px\" id=\"" + g + "\">");
-
-        // Add the image in the page
-        $("#gifs").append(divGif);
       }
     });
   }
 
-  // Add city button
-  $("#addCity").on("click", function () {
 
-    // Get city name from form
-    var newCity = $("#newCityName").val();
 
-    if (newCity != "") {
+  // BUTTON LOGIC
+
+  // Add character button
+  $("#addCharacter").on("click", function () {
+
+    // Get character name from form
+    var newCharacter = $("#newCharacterName").val();
+
+    if (newCharacter != "") {
       // Add a new topic to the `topics` array
-      topics.push(newCity);
+      topics.push(newCharacter);
 
       // Clear form
-      $("#newCityName").val("");
+      $("#newCharacterName").val("");
 
       updateScreen();
     } else {
-      alert("City value cannot be empty!")
+      alert("Oops... you forgot to enter a character name!")
     }
-
-  });
-
-  // Search for a GIF using the search box
-  $("#submit").on("click", function () {
-    // Clear the existing elements, if any
-    $("#gifs").html("");
-
-    // Get the search string form the form
-    var query = $("#inlineFormInput").val() + " disney";
-
-    // Clear form
-    $("#inlineFormInput").val("");
-
-    // Go get the gif using the search string
-    getGif(query);
   });
 
   // Clear images from the screen
   $("#clear").on("click", function () {
     // Clear the existing elements, if any
     $("#gifs").html("");
-
   });
 
   // Click a button to look for images
@@ -157,27 +146,29 @@ $(document).ready(function () {
     // Clear the existing elements, if any
     $("#gifs").html("");
 
-    console.log(this.innerHTML);
+    // What button was pressed
+    console.log('Button pressed: ' + this.innerHTML);
 
     // Get the search string form the form
-    var query = this.innerHTML  + " disney";
+    var query = this.innerHTML + " disney";
 
     // Go get the gif using the search string
-    getGif(query);
+    getGif(query.toLowerCase());
   });
 
+  // Show animated GIF when mouse over image
   $("#gifs").on("mouseover", ".staticgif", function () {
 
     $("#" + this.id).attr("src", response.data[this.id].images.fixed_height.url);
 
   });
 
+  // Show static GIF when mouse leaves image
   $("#gifs").on("mouseleave", ".staticgif", function () {
 
     $("#" + this.id).attr("src", response.data[this.id].images.fixed_height_still.url);
 
   });
-
 
   // Build th screen on load
   updateScreen()
