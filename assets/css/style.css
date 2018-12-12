@@ -1,0 +1,57 @@
+@font-face {
+    font-family: DK_Crayon;
+    src: url(../fonts/DK_Crayon_Crumble.ttf);
+}
+
+body {
+    background-image: url("../images/wdw_01.jpg");
+    background-color: #365a75;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    color: rgb(211, 211, 211);
+    text-shadow: 2px 2px 10px #111111;
+}
+
+#header{
+    text-align: center;
+}
+
+#headerLogo{
+    width: 400px;
+    filter: drop-shadow(3px 3px 2px #00000094);
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        background-size: auto 100%;
+        /* background-position-x: -310px; */
+    }
+
+    #imageStart {
+        width: 220px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    #imageEnd {
+        width: 120px;
+    }
+
+    h3 {
+        font-size: 1.4rem;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    body {
+        background-size: auto 100%;
+        background-position-x: -310px;
+    }
+
+}
+
+
+

@@ -5,7 +5,7 @@ var response = "";
 
 
 //      ARRAYS
-var topics = ["paris", "madrid", "new york", "toronto", "tokyo"];
+var topics = ["Mickey Mouse", "Pluto", "Chip", "Winnie Pooh", "Cinderella"];
 
 
 //      STRINGS/CHAR
@@ -32,7 +32,7 @@ $(document).ready(function () {
     for (var d in data)
       ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));
 
-    // Log the sting (key & query)  
+    // Log the sting (key & query)
     //console.log("Encoded string: " + ret.join("&"));
 
     // Return an array (already scaped) with key and query
@@ -58,7 +58,7 @@ $(document).ready(function () {
       if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
         callback(xmlHttp.responseText);
     }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous
     xmlHttp.send(null);
   }
 
@@ -72,7 +72,7 @@ $(document).ready(function () {
     // create a `params` variable with key, query and limit of hits string values
     var params = {
       "api_key": myKey,
-      "q": query,
+      "q": query + "+disney",
       "limit": searchLimit
     };
 
@@ -120,6 +120,9 @@ $(document).ready(function () {
       // Add a new topic to the `topics` array
       topics.push(newCity);
 
+      // Clear form
+      $("#newCityName").val("");
+
       updateScreen();
     } else {
       alert("City value cannot be empty!")
@@ -134,6 +137,9 @@ $(document).ready(function () {
 
     // Get the search string form the form
     var query = $("#inlineFormInput").val();
+
+    // Clear form
+    $("#inlineFormInput").val("");
 
     // Go get the gif using the search string
     getGif(query);
