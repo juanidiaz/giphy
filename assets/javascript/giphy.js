@@ -48,7 +48,7 @@ $(document).ready(function () {
 
     // Build all buttons again
     for (var c in topics)
-      $("#buttons").append("<button class=\"btn btn-primary mb-2 ml-3 searchMe\">" + topics[c] + "</button>");
+      $("#buttons").append("<button class=\"btn btn-light mb-2 ml-3 searchMe\">" + topics[c] + "</button>");
 
   }
 
@@ -72,7 +72,7 @@ $(document).ready(function () {
     // create a `params` variable with key, query and limit of hits string values
     var params = {
       "api_key": myKey,
-      "q": query + "+disney",
+      "q": query,
       "limit": searchLimit
     };
 
@@ -136,13 +136,20 @@ $(document).ready(function () {
     $("#gifs").html("");
 
     // Get the search string form the form
-    var query = $("#inlineFormInput").val();
+    var query = $("#inlineFormInput").val() + " disney";
 
     // Clear form
     $("#inlineFormInput").val("");
 
     // Go get the gif using the search string
     getGif(query);
+  });
+
+  // Clear images from the screen
+  $("#clear").on("click", function () {
+    // Clear the existing elements, if any
+    $("#gifs").html("");
+
   });
 
   // Click a button to look for images
@@ -153,7 +160,7 @@ $(document).ready(function () {
     console.log(this.innerHTML);
 
     // Get the search string form the form
-    var query = this.innerHTML;
+    var query = this.innerHTML  + " disney";
 
     // Go get the gif using the search string
     getGif(query);

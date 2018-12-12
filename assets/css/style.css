@@ -1,25 +1,45 @@
 @font-face {
-    font-family: DK_Crayon;
-    src: url(../fonts/DK_Crayon_Crumble.ttf);
+    font-family: FloridaProjectOne;
+    src: url(../fonts/FloridaProjectPhaseOne.ttf);
+}
+
+@font-face {
+    font-family: MouseMemoirs;
+    src: url(../fonts/MouseMemoirs-Regular.ttf);
 }
 
 body {
-    background-image: url("../images/wdw_01.jpg");
-    background-color: #365a75;
+    background-image: url("../images/wdw_03.jpg");
+    background-color: #000131;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    background-size: 100% auto;
+    background-size: 100%;
+    background-position: bottom;
     color: rgb(211, 211, 211);
     text-shadow: 2px 2px 10px #111111;
+    text-align: center;
 }
 
 #header{
-    text-align: center;
+    margin-top: 30px;
 }
 
 #headerLogo{
     width: 400px;
     filter: drop-shadow(3px 3px 2px #00000094);
+}
+
+.searchMe{
+    /* background-color: #dae0e5; */
+    /* border-color: #d3d9df; */
+    background-color: #ecbd4890;
+    border-color: #5f3b1d;
+    color:  #5f3b1d;
+}
+
+.searchMe:hover{
+    background-color: #ecbd48;
+    border-color: #9b4804;
 }
 
 @media screen and (max-width: 768px) {
@@ -28,21 +48,7 @@ body {
         /* background-position-x: -310px; */
     }
 
-    #imageStart {
-        width: 220px;
-    }
 
-    h1 {
-        font-size: 2rem;
-    }
-
-    #imageEnd {
-        width: 120px;
-    }
-
-    h3 {
-        font-size: 1.4rem;
-    }
 }
 
 @media screen and (max-width: 400px) {
