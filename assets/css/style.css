@@ -41,8 +41,11 @@ a:hover {
 .card{
     font-size: 1.3em;
     color: black;
-    max-width: 20rem;
+    max-width: 200px;
     display: inline-block;
+    font-weight: 700;
+    border: 2px solid #ecbd48;
+      background-color: rgba(255, 255, 255, 0.637);
 }
 
 footer {
