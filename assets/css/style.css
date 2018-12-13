@@ -58,6 +58,15 @@ footer {
 
 
 @media screen and (max-width: 768px) {
+
+    html{
+        background: no-repeat bottom fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+
     body {
         background-repeat: no-repeat;
         background-position: left 52% bottom;
