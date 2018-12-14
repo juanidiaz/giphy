@@ -11,7 +11,7 @@
 #INSTRUCTIONS:
 
 
-
+![Screen shot](./assets/images/screen_01.png)
 
 
 # TIPS
