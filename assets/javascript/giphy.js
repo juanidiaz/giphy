@@ -49,34 +49,11 @@ $(document).ready(function () {
     // Build all buttons again
     for (var c in topics)
       $("#buttons").append("<button class=\"btn btn-light mb-2 ml-3 searchMe\">" + topics[c] + "</button>");
-
-  }
-
-  function getResponse(theUrl, callback) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function () {
-      if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-        callback(xmlHttp.responseText);
-    }
-    xmlHttp.open("GET", theUrl, true); // true for asynchronous
-    xmlHttp.send(null);
-  }
-
-  // Return an new card 
-  function newGif(item) {
-    
-    var cardDiv = $("<div>").addClass("card m-2");
-    var cardImg = $("<img>").attr("src", response.data[item].images.fixed_height_still.url).addClass("staticgif card-img-top").attr('id', item).appendTo(cardDiv);
-    var cardBody = $("<div>").addClass("card-body").appendTo(cardDiv);
-    var cardText = $("<p>").addClass("card-text").text("Rating: " + response.data[item].rating.toUpperCase()).appendTo(cardBody)
-
-    // Return the element
-    return cardDiv;
   }
 
   function getGif(query) {
     // Text to look
-    console.log("Looking for: " + query);
+    //console.log("Looking for: " + query);
 
     // Replace spaces for `+`
     query = query.replace(" ", "+");
@@ -94,25 +71,26 @@ $(document).ready(function () {
     // Ask GIPHY and use the response
     //    Sample request "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=YOUR_API_KEY&limit=5");
 
-    getResponse("https://api.giphy.com/v1/gifs/search?" + params, function (data) {
+    var queryURL = "https://api.giphy.com/v1/gifs/search?" + params;
 
-      // Get only the GIFS of the data
-      var gifs = JSON.parse(data);
-      response = gifs;
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function (res) {
 
-      // Log the array with all the GIF info
-      console.log(gifs.data);
+      response = res;
 
       // For each GIF append an element to the DOM
-      for (var g in gifs.data) {
+      for (var g in res.data) {
+        var cardDiv = $("<div>").addClass("card m-2");
+        var cardImg = $("<img>").attr("src", res.data[g].images.fixed_height_still.url).addClass("staticgif card-img-top").attr("id", g).appendTo(cardDiv);
+        var cardBody = $("<div>").addClass("card-body").appendTo(cardDiv);
+        var cardText = $("<p>").addClass("card-text").text("Rating: " + res.data[g].rating.toUpperCase()).appendTo(cardBody)
 
-        $("#gifs").append(newGif(g));
-
+        $("#gifs").append(cardDiv);
       }
     });
   }
-
-
 
   // BUTTON LOGIC
 
@@ -147,7 +125,7 @@ $(document).ready(function () {
     $("#gifs").html("");
 
     // What button was pressed
-    console.log('Button pressed: ' + this.innerHTML);
+    //console.log('Button pressed: ' + this.innerHTML);
 
     // Get the search string form the form
     var query = this.innerHTML + " disney";
@@ -160,14 +138,12 @@ $(document).ready(function () {
   $("#gifs").on("mouseover", ".staticgif", function () {
 
     $("#" + this.id).attr("src", response.data[this.id].images.fixed_height.url);
-
   });
 
   // Show static GIF when mouse leaves image
   $("#gifs").on("mouseleave", ".staticgif", function () {
 
     $("#" + this.id).attr("src", response.data[this.id].images.fixed_height_still.url);
-
   });
 
   // Build th screen on load
