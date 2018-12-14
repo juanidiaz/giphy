@@ -12,7 +12,7 @@ A dynamic web page that populates gifs of your choice using the GIPHY API. This 
 3. Add your favorite character and repeat steps 1-2.
 4. Clear the images (not the buttons)
 
-![Screen shot](./assets/images/screen_01.png)
+![Screenshot](./assets/images/screen_01.png)
 
 ## BUILDING TOOLS
 - HTML, CSS
@@ -22,4 +22,5 @@ A dynamic web page that populates gifs of your choice using the GIPHY API. This 
 
 ## QUESTIONS OR COMMENTS
 - Images powered by [GIPHY](https://giphy.com/)
-- Feel free to contact the developer @ <jdi@idiaz.ca>! 
+- Feel free to contact the developer @ <jdi@idiaz.ca>!
+- See the project [live](https://juanidiaz.github.io/giphy/).
