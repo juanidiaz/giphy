@@ -1,8 +1,9 @@
-#Giphy
+# Gif-Tastic
 > Cretaed by:     Juan I Diaz (jdi@idiaz.ca)
 > Date:           December 2018
 
-## DESCRIPTION: A dynamic web page that populates gifs of your choice using the GIPHY API. This project uses API calls to GIPHY and modifies the DOM using JavaScript and jQuery
+## DESCRIPTION:
+A dynamic web page that populates gifs of your choice using the GIPHY API. This project uses API calls to GIPHY and modifies the DOM using JavaScript and jQuery
 
 ## INSTRUCTIONS:
 
