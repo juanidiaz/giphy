@@ -10,6 +10,11 @@ body {
     text-align: center;
 }
 
+.bucket {
+    min-height: 790px;
+
+}
+
 a {
     color: rgb(211, 211, 211);
     text-decoration: none;
@@ -17,7 +22,7 @@ a {
 }
 
 a:hover {
-    color:#ecbd48;
+    color: #ecbd48;
     text-decoration: none;
     background-color: transparent;
 }
@@ -38,7 +43,7 @@ a:hover {
     border-color: #9b4804;
 }
 
-.card{
+.card {
     font-size: 1.3em;
     color: black;
     max-width: 200px;
@@ -59,8 +64,8 @@ footer {
 
 @media screen and (max-width: 768px) {
 
-    html{
-        background: no-repeat bottom fixed; 
+    html {
+        background: no-repeat bottom fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;

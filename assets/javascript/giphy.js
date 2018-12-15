@@ -136,17 +136,19 @@ $(document).ready(function () {
 
     var buttonCharacter = this.innerHTML
 
-    $("#gifs").fadeOut();
-
-    // Wait 0.3 seconds for fadeOut to complete... then continue
-    setTimeout(function () {
-
+    $("#gifs").fadeOut("fast", function () {
       // Get the search string form the form
       var query = buttonCharacter + " disney";
       console.log(query);
 
       // Go get the gif using the search string
       getGif(query.toLowerCase());
+      
+    });
+
+    // Wait 0.3 seconds for fadeOut to complete... then continue
+    setTimeout(function () {
+
 
       // Waiting for 0.3 seconds
     }, 300);
