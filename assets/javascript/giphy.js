@@ -78,6 +78,10 @@ $(document).ready(function () {
       method: "GET"
     }).then(function (res) {
 
+      // Clear and hidding the existing elements, if any
+      $("#gifs").html("");
+      $("#gifs").css("display", "none");
+
       response = res;
 
       // For each GIF append an element to the DOM
@@ -87,8 +91,13 @@ $(document).ready(function () {
         var cardBody = $("<div>").addClass("card-body").appendTo(cardDiv);
         var cardText = $("<p>").addClass("card-text").text("Rating: " + res.data[g].rating.toUpperCase()).appendTo(cardBody)
 
+        // Append each card
         $("#gifs").append(cardDiv);
+
       }
+      // Fade In THIS cards at once
+      $("#gifs").fadeIn();
+
     });
   }
 
@@ -115,23 +124,33 @@ $(document).ready(function () {
 
   // Clear images from the screen
   $("#clear").on("click", function () {
+    //Fade out all cards, if any
+    $(".card").fadeOut();
+
     // Clear the existing elements, if any
     $("#gifs").html("");
   });
 
   // Click a button to look for images
   $("#buttons").on("click", ".btn", function () {
-    // Clear the existing elements, if any
-    $("#gifs").html("");
 
-    // What button was pressed
-    //console.log('Button pressed: ' + this.innerHTML);
+    var buttonCharacter = this.innerHTML
 
-    // Get the search string form the form
-    var query = this.innerHTML + " disney";
+    $("#gifs").fadeOut();
 
-    // Go get the gif using the search string
-    getGif(query.toLowerCase());
+    // Wait 0.3 seconds for fadeOut to complete... then continue
+    setTimeout(function () {
+
+      // Get the search string form the form
+      var query = buttonCharacter + " disney";
+      console.log(query);
+
+      // Go get the gif using the search string
+      getGif(query.toLowerCase());
+
+      // Waiting for 0.3 seconds
+    }, 300);
+
   });
 
   // Show animated GIF when mouse over image
